@@ -18,7 +18,7 @@ export const venueProfile = {
   rules: [
     "Booking requests are reviewed by the venue admin before approval.",
     "Outside vendors are allowed with prior coordination.",
-    "Setup time must fit inside the selected booking slot unless arranged separately.",
+    "Each booking slot can be reserved for 1 hour or 2 hours maximum.",
     "No payment is collected through this demo booking system.",
   ],
 };
@@ -26,7 +26,7 @@ export const venueProfile = {
 export const venueHighlights = [
   { label: "Capacity", value: "420 guests" },
   { label: "From", value: "RM 2,800" },
-  { label: "Slots", value: "Morning, afternoon, evening" },
+  { label: "Slots", value: "1-2 hour windows" },
   { label: "Response", value: "Within 1 business day" },
 ];
 

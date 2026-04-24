@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { clearAdminSession, createAdminSession, requireAdmin } from "@/lib/auth";
 import { ensureVenue } from "@/lib/data";
 import { prisma } from "@/lib/prisma";
-import { toEventDate } from "@/lib/time-slots";
+import { doTimeSlotsOverlap, toEventDate } from "@/lib/time-slots";
 import { bookingSchema, loginSchema, statusSchema } from "@/lib/validation";
 
 export type FormState = {
@@ -41,14 +41,18 @@ export async function createBooking(
   const venue = await ensureVenue();
   const eventDate = toEventDate(parsed.data.eventDate);
 
-  const approvedConflict = await prisma.booking.findFirst({
+  const approvedBookings = await prisma.booking.findMany({
     where: {
       venueId: venue.id,
       eventDate,
-      timeSlot: parsed.data.timeSlot,
       status: "approved",
     },
+    select: { timeSlot: true },
   });
+
+  const approvedConflict = approvedBookings.some((booking) =>
+    doTimeSlotsOverlap(booking.timeSlot, parsed.data.timeSlot),
+  );
 
   if (approvedConflict) {
     return {
@@ -127,15 +131,19 @@ export async function updateBookingStatus(formData: FormData) {
   }
 
   if (parsed.data.status === "approved") {
-    const conflict = await prisma.booking.findFirst({
+    const approvedBookings = await prisma.booking.findMany({
       where: {
         id: { not: parsed.data.bookingId },
         venueId: booking.venueId,
         eventDate: booking.eventDate,
-        timeSlot: booking.timeSlot,
         status: "approved",
       },
+      select: { timeSlot: true },
     });
+
+    const conflict = approvedBookings.some((approvedBooking) =>
+      doTimeSlotsOverlap(approvedBooking.timeSlot, booking.timeSlot),
+    );
 
     if (conflict) {
       redirect("/admin?error=slot-taken");

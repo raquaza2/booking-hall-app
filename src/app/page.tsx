@@ -97,7 +97,7 @@ export default function Home() {
                 {
                   icon: Clock3,
                   title: "Time slots",
-                  text: "Morning, afternoon, and evening slots keep availability easy to review.",
+                  text: "Guests can reserve a 1-hour or 2-hour slot, with two hours as the maximum.",
                 },
                 {
                   icon: Users,

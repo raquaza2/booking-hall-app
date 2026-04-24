@@ -32,8 +32,8 @@ export default function VenuePage() {
                 </div>
                 <div className="rounded-md border border-stone-200 p-4">
                   <ShieldCheck className="text-emerald-700" size={22} />
-                  <p className="mt-3 text-2xl font-semibold text-stone-950">3</p>
-                  <p className="text-sm text-stone-500">Daily time slots</p>
+                  <p className="mt-3 text-2xl font-semibold text-stone-950">1-2h</p>
+                  <p className="text-sm text-stone-500">Slot duration</p>
                 </div>
                 <div className="rounded-md border border-stone-200 p-4">
                   <MapPin className="text-emerald-700" size={22} />

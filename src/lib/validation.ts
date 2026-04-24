@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { timeSlots } from "./time-slots";
+import { isValidTimeSlot } from "./time-slots";
 
 const phoneRegex = /^[0-9+\-\s()]{8,24}$/;
 
@@ -20,7 +20,10 @@ export const bookingSchema = z.object({
     .refine((value) => value >= new Date().toISOString().slice(0, 10), {
       message: "Choose today or a future date.",
     }),
-  timeSlot: z.enum(timeSlots, { message: "Choose an available time slot." }),
+  timeSlot: z
+    .string()
+    .trim()
+    .refine(isValidTimeSlot, "Choose a 1-hour or 2-hour time slot."),
   notes: z.string().trim().max(600, "Keep notes under 600 characters.").optional(),
 });
 

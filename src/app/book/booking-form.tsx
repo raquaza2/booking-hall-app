@@ -107,7 +107,11 @@ export function BookingForm() {
 
       <fieldset>
         <legend className={labelClass}>Time slot</legend>
-        <div className="mt-3 grid gap-3 md:grid-cols-3">
+        <p className="mt-1 text-sm text-stone-600">
+          Choose a 1-hour or 2-hour reservation window. Two hours is the maximum
+          length per booking slot.
+        </p>
+        <div className="mt-3 grid max-h-[420px] gap-3 overflow-y-auto pr-1 sm:grid-cols-2 lg:grid-cols-3">
           {timeSlots.map((slot) => (
             <label
               key={slot}
@@ -121,7 +125,15 @@ export function BookingForm() {
                 className="size-4 accent-emerald-700"
                 required
               />
-              {slot}
+              <span>
+                <span className="block">{slot}</span>
+                <span className="block text-xs font-normal text-stone-500">
+                  {slot.endsWith(":00") &&
+                  Number(slot.slice(8, 10)) - Number(slot.slice(0, 2)) === 2
+                    ? "2 hours"
+                    : "1 hour"}
+                </span>
+              </span>
             </label>
           ))}
         </div>
