@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: booking-hall-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: bookinghall
+      POSTGRES_PASSWORD: bookinghall
+      POSTGRES_DB: bookinghall
+    ports:
+      - "5432:5432"
+    volumes:
+      - booking-hall-postgres:/var/lib/postgresql/data
+
+volumes:
+  booking-hall-postgres:

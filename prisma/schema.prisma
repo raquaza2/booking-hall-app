@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum BookingStatus {
+  pending
+  approved
+  rejected
+}
+
+model Venue {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  tagline     String
+  address     String
+  capacity    Int
+  basePrice   Int
+  description String
+  amenities   String[]
+  rules       String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+}
+
+model Booking {
+  id           String        @id @default(cuid())
+  venueId      String
+  venue        Venue         @relation(fields: [venueId], references: [id], onDelete: Cascade)
+  customerName String
+  email        String
+  phone        String
+  eventType    String
+  guestCount   Int
+  eventDate    DateTime
+  timeSlot     String
+  notes        String?
+  status       BookingStatus @default(pending)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([venueId, eventDate, timeSlot, status])
+  @@index([status, createdAt])
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
