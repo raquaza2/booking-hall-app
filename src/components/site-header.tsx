@@ -1,20 +1,26 @@
 import Link from "next/link";
-import { CalendarCheck, LogIn } from "lucide-react";
+import { CalendarCheck, Crown, LogIn } from "lucide-react";
 
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-stone-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-5 sm:px-8">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="grid size-10 place-items-center rounded-md bg-emerald-700 text-sm font-bold text-white">
-            GA
+        <Link href="/" className="group flex items-center gap-3">
+          <span className="relative grid size-12 place-items-center overflow-hidden rounded-md bg-stone-950 text-white shadow-sm ring-1 ring-stone-900/10">
+            <span className="absolute inset-x-0 top-0 h-1 bg-amber-400" />
+            <span className="absolute -right-3 -top-3 size-8 rounded-full bg-emerald-500/30" />
+            <span className="absolute -bottom-4 -left-2 size-9 rounded-full bg-amber-300/25" />
+            <Crown className="relative mb-0.5 text-amber-300" size={17} strokeWidth={2.2} />
+            <span className="relative text-[11px] font-black leading-none tracking-normal">
+              GA
+            </span>
           </span>
           <span>
-            <span className="block text-base font-semibold text-stone-950">
+            <span className="block text-base font-bold leading-tight text-stone-950 group-hover:text-emerald-800">
               Grand Aurora Hall
             </span>
-            <span className="block text-xs text-stone-500">
-              Venue booking desk
+            <span className="mt-0.5 block text-xs font-medium text-stone-500">
+              Private venue booking
             </span>
           </span>
         </Link>
